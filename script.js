@@ -52,11 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target); // Free up memory once animated
                 }
             });
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.animate-in').forEach(el => {
+            el.style.animationPlayState = 'paused'; // Ensure they start paused until visible
             observer.observe(el);
         });
     }
